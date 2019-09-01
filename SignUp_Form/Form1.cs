@@ -16,7 +16,7 @@ namespace SignUp_Form
 {
     public partial class Form1 : Form
     {
-       
+        public int count = 0;
         public Form1()
         {
             InitializeComponent();
@@ -24,7 +24,7 @@ namespace SignUp_Form
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+
 
             //reading the state name from txt file
 
@@ -38,56 +38,70 @@ namespace SignUp_Form
                 cmbox_state.Items.Add(s);
             }
             //********************************************************************************************************************************
+
             
-
-
-
         }
 
         private void Btn_save_form_Click(object sender, EventArgs e)
         {
+            //********************************************************************************************************************
 
-            //******************************************************************************************************************************
-
-            string fileTest = @"C:\Users\Sunnation\Desktop\SignUp_Form\more.xlsx";
-
-            if (File.Exists(fileTest))
-            {
-                File.Delete(fileTest);
-            }
-
-            Excel.Application oApp;
-            Excel.Worksheet oSheet;
-            Excel.Workbook oBook;
-
-            oApp = new Excel.Application();
-            oBook = oApp.Workbooks.Add();
-            oSheet = (Excel.Worksheet)oBook.Worksheets.get_Item(1);
-            oSheet.Cells[1, 1] = txtbox_first_name.Text;
-
-
-            oBook.SaveAs(fileTest);
-            oBook.Close();
-            oApp.Quit();
-
-
-
-
-
-
+            //string path = @"C:\Users\Sunnation\Desktop\SignUp_Form\SignUp_Form\bin\Debug\data.txt";
+            //StreamWriter sw = new StreamWriter(path, true);
+            //sw.WriteLine(txtbox_first_name.Text+","+txtbox_last_name.Text+","+txtbox_address.Text+","+ txtbox_city.Text+","+ cmbox_state.SelectedItem+","+ txtbox_zip.Text+","+ cmbox_gender.SelectedItem+","+ txtbox_DOB.Text+","+ txtbox_phone_no.Text);
+            //sw.Close();
 
             //*******************************************************************************************************************************
 
-
-            MessageBox.Show(txtbox_first_name.Text + " " +
+            var result=MessageBox.Show(txtbox_first_name.Text + " " +
                 txtbox_last_name.Text + " " +
                 txtbox_address.Text + " " +
                 txtbox_city.Text +
                 cmbox_state.SelectedItem + " " +
                 txtbox_zip.Text + " " +
                 cmbox_gender.SelectedItem + " " +
-                txtbox_DOB.Text+" "+
-                txtbox_phone_no.Text);
+                txtbox_DOB.Text + " " +
+                txtbox_phone_no.Text, "Do you want to save?",MessageBoxButtons.YesNo,MessageBoxIcon.Exclamation);
+
+            if (result==DialogResult.Yes)
+            {
+                string path = @"C:\Users\Sunnation\Desktop\SignUp_Form\SignUp_Form\bin\Debug\data.txt";
+                StreamWriter sw = new StreamWriter(path, true);
+                sw.WriteLine(txtbox_first_name.Text + "," + txtbox_last_name.Text + "," + txtbox_address.Text + "," + txtbox_city.Text + "," + cmbox_state.SelectedItem + "," + txtbox_zip.Text + "," + cmbox_gender.SelectedItem + "," + txtbox_DOB.Text + "," + txtbox_phone_no.Text);
+                sw.Close();
+
+                //clearing the form items ********************************
+                txtbox_first_name.Clear();
+                txtbox_last_name.Clear();
+                txtbox_address.Clear();
+                txtbox_city.Clear();
+                cmbox_state.Text="";
+                txtbox_zip.Clear();
+                cmbox_gender.Text = "";
+                txtbox_DOB.Clear();
+                txtbox_phone_no.Clear();
+                //************************************************************
+
+                MessageBox.Show("Your data is SAVED");
+
+            }
+            else
+            {
+                txtbox_first_name.Clear();
+                txtbox_last_name.Clear();
+                txtbox_address.Clear();
+                txtbox_city.Clear();
+                cmbox_state.Text="";
+                txtbox_zip.Clear();
+                cmbox_gender.Text="";
+                txtbox_DOB.Clear();
+                txtbox_phone_no.Clear();
+
+                MessageBox.Show("Your data IS NOT SAVED");
+            }
+
+
+            
 
            
 
